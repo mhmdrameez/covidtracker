@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid 19 tracker</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Covid 19 Tracker</h1>
+    <form action="" id="myForm" >
+    <input type="text" id="country" placeholder="Country Name" required>
+     <input type="submit" value="Get Data">
+    </form> 
+    <h1 id="confirmed"></h1>
+    <h1 id="recovered"></h1>
+    <h1 id="deaths"></h1>
+    </body>
+    <script>
+      var myForm=document.getElementById('myForm')
+
+      myForm.addEventListener('submit',function(e){
+
+        e.preventDefault()
+
+        var country=document.getElementById('country').value
+         
+         //fetch request
+         
+         var url = "https://api.covid19api.com/total/dayone/country/"+country
+         fetch(url)
+          .then((res) =>res.json())
+           .then((res) => {
+
+            console.log(res)
+            var length = res.length
+            var index = length - 1
+            var confirmed = document.getElementById('confirmed')
+            var recovered = document.getElementById('recovered')
+            var deaths = document.getElementById('deaths')
+             
+             confirmed.innerHTML=''
+             recovered.innerHTML=''
+             deaths.innerHTML=''
+
+
+
+             confirmed.append("Total Confirmed:"+res[index].Confirmed)
+             recovered.append("Total Recovered:"+res[index].Recovered)
+             deaths.append("Total Deaths:"+res[index].Deaths)
+
+           })
+
+
+      })
+
+      
+    </script>
+
+</html>
